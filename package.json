@@ -4,6 +4,7 @@
   "description": "PiNGiN — a local-first pi-agent companion that appears next to your cursor",
   "main": "dist/main/index.js",
   "scripts": {
+    "start": "electron dist/main/index.js",
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "build:renderer": "vite build",
