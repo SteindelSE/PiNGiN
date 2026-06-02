@@ -1,18 +1,3 @@
-// Copyright (C) 2026 SteindelSE
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import React from 'react';
 import { usePinginStore } from '../store';
 
@@ -40,10 +25,10 @@ const ContextPill: React.FC = () => {
   const contextWindow = contextUsage?.contextWindow ?? 0;
 
   return (
-    <div className="shrink-0 px-2 py-1.5 border-t border-slate-700/30">
+    <div className="shrink-0 px-2 py-1.5 border-t border-accent-subtle bg-footer">
       <div className="flex items-center gap-2 bg-slate-800/60 rounded-full px-3 py-1.5">
         {/* Model name */}
-        <span className="text-xs font-medium text-slate-300 truncate max-w-[80px]">
+        <span className="text-xs font-medium text-text-accent truncate max-w-[80px]">
           {modelShortName}
         </span>
 
@@ -51,7 +36,7 @@ const ContextPill: React.FC = () => {
         <span className="text-slate-600">|</span>
 
         {/* Thinking level */}
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-text-accent-dim">
           {thinkingLevel}
         </span>
 
@@ -67,7 +52,7 @@ const ContextPill: React.FC = () => {
                 style={{ width: `${Math.min(percent, 100)}%` }}
               />
             </div>
-            <span className="text-xs text-slate-400 shrink-0">
+            <span className="text-xs text-text-accent-dim shrink-0">
               {Math.round(percent)}%
             </span>
           </div>
@@ -76,7 +61,7 @@ const ContextPill: React.FC = () => {
         {/* Session history button */}
         <button
           onClick={() => setShowSessionHistory(true)}
-          className="no-drag p-1 rounded hover:bg-slate-700/50 transition-colors text-slate-400 hover:text-slate-200"
+          className="no-drag p-1 rounded hover:bg-accent-subtle transition-colors text-slate-400 hover:text-text-accent"
           title="Session History"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,7 +72,7 @@ const ContextPill: React.FC = () => {
         {/* Hamburger menu */}
         <button
           onClick={() => setShowHamburgerMenu(true)}
-          className="no-drag p-1 rounded hover:bg-slate-700/50 transition-colors text-slate-400 hover:text-slate-200"
+          className="no-drag p-1 rounded hover:bg-accent-subtle transition-colors text-slate-400 hover:text-text-accent"
           title="Settings"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

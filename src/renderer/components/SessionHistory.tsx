@@ -1,18 +1,3 @@
-// Copyright (C) 2026 SteindelSE
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import React, { useState } from 'react';
 import { usePinginStore } from '../store';
 
@@ -67,13 +52,13 @@ const SessionHistory: React.FC = () => {
       />
 
       {/* Slide-out panel */}
-      <div className="fixed right-0 top-0 bottom-0 w-80 bg-slate-900/95 backdrop-blur-xl border-l border-slate-700/50 z-50 animate-slide-in overflow-y-auto">
+      <div className="fixed right-0 top-0 bottom-0 w-80 bg-slate-900/95 backdrop-blur-xl border-l border-accent-subtle z-50 animate-slide-in overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
-          <h3 className="text-sm font-semibold text-slate-200">Session History</h3>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-accent-subtle bg-header">
+          <h3 className="text-sm font-semibold text-text-accent">Session History</h3>
           <button
             onClick={() => setShowSessionHistory(false)}
-            className="p-1 rounded hover:bg-slate-700/50 text-slate-400 hover:text-slate-200 transition-colors no-drag"
+            className="p-1 rounded hover:bg-accent-subtle text-slate-400 hover:text-text-accent transition-colors no-drag"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -93,19 +78,19 @@ const SessionHistory: React.FC = () => {
                 {cursorSessions.map((session) => (
                   <div
                     key={session.id}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-500/10 transition-colors no-drag"
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent-subtle transition-colors no-drag"
                   >
                     <button
                       onClick={() => handleSessionClick(session.id)}
                       className="flex-1 min-w-0 text-left"
                     >
                       <div className="text-sm text-slate-200 truncate">{session.name}</div>
-                      <div className="text-xs text-slate-500">
+                      <div className="text-xs text-text-accent-dim">
                         {formatTime(session.lastActivity)} · {session.messageCount} msgs
                       </div>
                     </button>
                     {session.isStreaming && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse shrink-0" />
                     )}
                     <button
                       onClick={() => handleDeleteClick(session.id)}
@@ -139,12 +124,12 @@ const SessionHistory: React.FC = () => {
                       className="flex-1 min-w-0 text-left"
                     >
                       <div className="text-sm text-slate-300 truncate">{session.name}</div>
-                      <div className="text-xs text-slate-500">
+                      <div className="text-xs text-text-accent-dim">
                         {formatTime(session.lastActivity)} · {session.messageCount} msgs
                       </div>
                     </button>
                     {session.isStreaming && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse shrink-0" />
                     )}
                     <button
                       onClick={() => handleDeleteClick(session.id)}
@@ -185,8 +170,8 @@ const SessionHistory: React.FC = () => {
           {/* Empty state */}
           {sessions.length === 0 && (
             <div className="flex flex-col items-center justify-center py-8 text-center">
-              <div className="text-2xl mb-2">📋</div>
-              <p className="text-sm text-slate-400">No sessions yet</p>
+              <div className="text-2xl mb-2 text-accent">📋</div>
+              <p className="text-sm text-text-accent">No sessions yet</p>
               <p className="text-xs text-slate-500 mt-1">
                 Sessions will appear here when you use PiNGiN
               </p>

@@ -1,18 +1,3 @@
-// Copyright (C) 2026 SteindelSE
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import React, { useRef, useEffect, useCallback } from 'react';
 import { usePinginStore } from '../store';
 import FoldableSection from './FoldableSection';
@@ -94,14 +79,14 @@ const ChatWindow: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Title bar */}
-      <div className="drag-region flex items-center justify-between px-4 py-2 border-b border-slate-700/50 shrink-0">
+      {/* Title bar — themed header */}
+      <div className="drag-region flex items-center justify-between px-4 py-2 border-b border-accent shrink-0 bg-header">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-accent tracking-wider">⚡ PiNGiN</span>
+          <span className="text-xs font-bold text-text-accent tracking-wider">⚡ PiNGiN</span>
           {isStreaming && (
             <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs text-slate-400">streaming</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="text-xs text-text-accent-dim">streaming</span>
             </span>
           )}
         </div>
@@ -109,7 +94,7 @@ const ChatWindow: React.FC = () => {
           {isStreaming && (
             <button
               onClick={handleAbort}
-              className="p-1 rounded hover:bg-red-500/20 transition-colors text-red-400 hover:text-red-300"
+              className="p-1 rounded hover:bg-accent-subtle transition-colors text-accent hover:text-text-accent"
               title="Abort"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -140,11 +125,11 @@ const ChatWindow: React.FC = () => {
 
       {/* Context summary (if context was captured) */}
       {context && (
-        <div className="px-3 py-2 border-b border-slate-700/30 shrink-0">
-          <div className="text-xs text-slate-500 space-y-0.5">
+        <div className="px-3 py-2 border-b border-accent-subtle shrink-0 bg-footer">
+          <div className="text-xs text-text-accent-dim space-y-0.5">
             {context.windowTitle && (
               <div className="flex items-center gap-1">
-                <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 shrink-0 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <span className="truncate">{context.windowTitle}</span>
@@ -152,7 +137,7 @@ const ChatWindow: React.FC = () => {
             )}
             {context.selectedText && (
               <div className="flex items-start gap-1">
-                <svg className="w-3 h-3 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 shrink-0 mt-0.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
                 <span className="truncate block max-w-full">{context.selectedText.substring(0, 120)}{context.selectedText.length > 120 ? '...' : ''}</span>
@@ -160,7 +145,7 @@ const ChatWindow: React.FC = () => {
             )}
             {context.browserUrl && (
               <div className="flex items-center gap-1">
-                <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-3 h-3 shrink-0 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                 </svg>
                 <span className="truncate">{context.browserUrl}</span>
@@ -175,8 +160,8 @@ const ChatWindow: React.FC = () => {
         {/* Welcome message if no messages */}
         {messages.length === 0 && sections.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center py-8">
-            <div className="text-3xl mb-3">⚡</div>
-            <h2 className="text-sm font-semibold text-slate-300 mb-1">PiNGiN</h2>
+            <div className="text-3xl mb-3 text-accent">⚡</div>
+            <h2 className="text-sm font-semibold text-text-accent mb-1">PiNGiN</h2>
             <p className="text-xs text-slate-500 max-w-xs">
               Your pi-agent companion. Type a message or press the shortcut to capture context and chat.
             </p>
@@ -197,7 +182,7 @@ const ChatWindow: React.FC = () => {
             <div
               className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-accent/15 text-slate-100 rounded-br-sm'
+                  ? 'bg-accent/15 text-text-accent rounded-br-sm'
                   : 'bg-slate-800/80 text-slate-200 rounded-bl-sm'
               } markdown-content`}
             >
@@ -213,7 +198,7 @@ const ChatWindow: React.FC = () => {
 
         {/* Streaming indicator */}
         {isStreaming && (
-          <div className="flex items-center gap-2 text-slate-500 text-xs animate-fade-in">
+          <div className="flex items-center gap-2 text-text-accent-dim text-xs animate-fade-in">
             <div className="flex gap-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: '0ms' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: '150ms' }} />
@@ -226,8 +211,8 @@ const ChatWindow: React.FC = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
-      <div className="px-3 py-2 border-t border-slate-700/30 shrink-0">
+      {/* Input area — themed footer */}
+      <div className="px-3 py-2 border-t border-accent-subtle shrink-0 bg-footer">
         <div className="flex items-end gap-2">
           <div className="flex-1 relative">
             <textarea
@@ -237,7 +222,7 @@ const ChatWindow: React.FC = () => {
               onKeyDown={handleKeyDown}
               placeholder="Type a message..."
               rows={1}
-              className="no-drag w-full bg-slate-800/60 border border-slate-700/50 rounded-xl px-3 py-2 text-sm text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition-all overflow-y-auto"
+              className="no-drag w-full bg-slate-800/60 border border-accent-subtle rounded-xl px-3 py-2 text-sm text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/20 transition-all overflow-y-auto"
               style={{ maxHeight: '120px' }}
             />
           </div>
