@@ -4,8 +4,9 @@
   "description": "PiNGiN — a local-first pi-agent companion that appears next to your cursor",
   "main": "dist/main/index.js",
   "scripts": {
-    "start": "electron dist/main/index.js",
+    "start": "npx vite build && electron dist/main/index.js",
     "dev": "vite",
+    "dev:electron": "concurrently --kill-others-on-fail --success=first \"vite build --watch\" \"electron dist/main/index.js\"",
     "build": "tsc && vite build && electron-builder",
     "build:renderer": "vite build",
     "build:main": "tsc --project tsconfig.main.json",
@@ -17,15 +18,16 @@
   },
   "dependencies": {
     "@earendil-works/pi-coding-agent": "^0.78.0",
-    "zustand": "^5.0.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.3",
     "electron": "^33.3.1",
     "electron-builder": "^25.1.8",
     "postcss": "^8.5.1",
