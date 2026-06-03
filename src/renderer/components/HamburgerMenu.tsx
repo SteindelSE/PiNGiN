@@ -120,11 +120,6 @@ const HamburgerMenu: React.FC = () => {
     window.pingin.setSettings(updated);
   };
 
-  const handleHide = async () => {
-    setShowHamburgerMenu(false);
-    await window.pingin.hideWindow();
-  };
-
   if (!showHamburgerMenu) return null;
 
   return (
@@ -233,16 +228,6 @@ const HamburgerMenu: React.FC = () => {
             )}
           </div>
 
-          {/* Divider */}
-          <div className="border-t border-slate-700/50" />
-
-          {/* Hide button */}
-          <button
-            onClick={handleHide}
-            className="w-full px-3 py-2 bg-slate-800/60 border border-slate-700/50 rounded-lg text-sm text-slate-300 hover:bg-slate-700/60 transition-colors no-drag"
-          >
-            Hide Window
-          </button>
         </div>
       </div>
     </>
