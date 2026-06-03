@@ -120,11 +120,8 @@ class RpcSession {
   }
 
   async prompt(message: string): Promise<void> {
-    const result = await this.sendCommand({ type: 'prompt', message });
-
-    if (!result.success) {
-      throw new Error(`Prompt failed: ${result.error}`);
-    }
+    // sendCommand already rejects on failure, no need to check result
+    await this.sendCommand({ type: 'prompt', message });
   }
 
   async abort(): Promise<void> {

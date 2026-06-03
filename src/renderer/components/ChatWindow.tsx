@@ -156,7 +156,7 @@ const ChatWindow: React.FC = () => {
         </div>
       )}
 
-      {/* Chat messages */}
+      {/* Chat messages — merged timeline of messages + sections by timestamp */}
       <div className="flex-1 overflow-y-auto px-3 py-2 space-y-3">
         {/* Welcome message if no messages */}
         {messages.length === 0 && sections.length === 0 && (
@@ -169,35 +169,43 @@ const ChatWindow: React.FC = () => {
           </div>
         )}
 
-        {/* Messages */}
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-          >
-            {msg.role === 'assistant' && (
-              <div className="w-5 h-5 rounded-full bg-accent/20 flex items-center justify-center shrink-0 mr-2 mt-1">
-                <span className="text-xs">⚡</span>
-              </div>
-            )}
-            <div
-              className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-accent/15 text-text-accent rounded-br-sm'
-                  : 'bg-slate-800/80 text-slate-200 rounded-bl-sm'
-              } markdown-content`}
-            >
-              <p className="whitespace-pre-wrap break-words">
-                <JsonRenderer text={msg.content} />
-              </p>
-            </div>
-          </div>
-        ))}
+        {/* Merged timeline */}
+        {(() => {
+          const timeline = [
+            ...messages.map((m) => ({ kind: 'message' as const, ts: m.timestamp, data: m })),
+            ...sections.map((s) => ({ kind: 'section' as const, ts: s.timestamp, data: s })),
+          ].sort((a, b) => a.ts - b.ts);
 
-        {/* Foldable sections */}
-        {sections.map((section) => (
-          <FoldableSection key={section.id} section={section} />
-        ))}
+          return timeline.map((item) => {
+            if (item.kind === 'message') {
+              const msg = item.data;
+              return (
+                <div
+                  key={msg.id}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                >
+                  {msg.role === 'assistant' && (
+                    <div className="w-5 h-5 rounded-full bg-accent/20 flex items-center justify-center shrink-0 mr-2 mt-1">
+                      <span className="text-xs">⚡</span>
+                    </div>
+                  )}
+                  <div
+                    className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
+                      msg.role === 'user'
+                        ? 'bg-accent/15 text-text-accent rounded-br-sm'
+                        : 'bg-slate-800/80 text-slate-200 rounded-bl-sm'
+                    } markdown-content`}
+                  >
+                    <p className="whitespace-pre-wrap break-words">
+                      <JsonRenderer text={msg.content} />
+                    </p>
+                  </div>
+                </div>
+              );
+            }
+            return <FoldableSection key={`s-${item.data.id}`} section={item.data} />;
+          });
+        })()}
 
         {/* Streaming indicator */}
         {isStreaming && (
