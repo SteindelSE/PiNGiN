@@ -197,7 +197,11 @@ const ChatWindow: React.FC = () => {
                     } markdown-content`}
                   >
                     <p className="whitespace-pre-wrap break-words">
-                      <JsonRenderer text={msg.content} />
+                      {msg.role === 'assistant' ? (
+                        <JsonRenderer text={msg.content} />
+                      ) : (
+                        msg.content
+                      )}
                     </p>
                   </div>
                 </div>
