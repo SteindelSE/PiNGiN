@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { usePinginStore } from '../store';
 import FoldableSection from './FoldableSection';
 import JsonRenderer from './JsonRenderer';
@@ -10,13 +10,29 @@ const ChatWindow: React.FC = () => {
     setShowHamburgerMenu,
   } = usePinginStore();
 
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
 
-  // Auto-scroll to bottom
-  useEffect(() => {
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, sections]);
+  };
+
+  // Detect scroll position to show/hide scroll-to-bottom button
+  const handleScroll = () => {
+    const container = chatContainerRef.current;
+    if (!container) return;
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
+    setShowScrollBtn(!isNearBottom);
+  };
+
+  useEffect(() => {
+    const container = chatContainerRef.current;
+    if (!container) return;
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Focus input on mount
   useEffect(() => {
@@ -157,7 +173,7 @@ const ChatWindow: React.FC = () => {
       )}
 
       {/* Chat messages — merged timeline of messages + sections by timestamp */}
-      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-3">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-3 py-2 space-y-3 relative">
         {/* Welcome message if no messages */}
         {messages.length === 0 && sections.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center py-8">
@@ -224,6 +240,19 @@ const ChatWindow: React.FC = () => {
         )}
 
         <div ref={messagesEndRef} />
+
+        {/* Scroll to bottom button */}
+        {showScrollBtn && (
+          <button
+            onClick={scrollToBottom}
+            className="no-drag absolute bottom-2 right-3 p-2 rounded-full bg-slate-800/90 border border-accent-subtle text-text-accent hover:bg-slate-700 transition-all shadow-lg animate-fade-in"
+            title="Scroll to bottom"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Input area — themed footer */}
