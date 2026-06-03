@@ -198,7 +198,7 @@ const ChatWindow: React.FC = () => {
         {(() => {
           const timeline = [
             ...messages.map((m) => ({ kind: 'message' as const, ts: m.timestamp, data: m })),
-            ...sections.map((s) => ({ kind: 'section' as const, ts: s.timestamp, data: s })),
+            ...sections.filter((s) => s.content && s.content.trim().length > 0).map((s) => ({ kind: 'section' as const, ts: s.timestamp, data: s })),
           ].sort((a, b) => a.ts - b.ts);
 
           return timeline.map((item) => {
