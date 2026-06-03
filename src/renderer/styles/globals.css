@@ -68,6 +68,11 @@ html, body {
   to { transform: translateX(0); opacity: 1; }
 }
 
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -85,6 +90,10 @@ html, body {
 
 .animate-slide-in {
   animation: slideIn 0.2s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.2s ease-out;
 }
 
 .animate-fade-in {
