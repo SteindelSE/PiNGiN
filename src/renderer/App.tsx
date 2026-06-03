@@ -226,7 +226,7 @@ const App: React.FC = () => {
         if (event.message?.role === 'user') {
           const content = typeof event.message.content === 'string'
             ? event.message.content
-            : JSON.stringify(event.message.content);
+            : event.message.content?.[0]?.text || JSON.stringify(event.message.content);
           addMessage({
             id: `msg-${Date.now()}`,
             role: 'user',

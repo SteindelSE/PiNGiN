@@ -43,14 +43,6 @@ const ChatWindow: React.FC = () => {
     const text = inputText.trim();
     if (!text) return;
 
-    // Add user message
-    addMessage({
-      id: `msg-${Date.now()}`,
-      role: 'user',
-      content: text,
-      timestamp: Date.now(),
-    });
-
     setInputText('');
 
     try {
