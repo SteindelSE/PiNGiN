@@ -136,7 +136,7 @@ const HamburgerMenu: React.FC = () => {
       />
 
       {/* Menu panel */}
-      <div className="fixed left-0 top-0 bottom-0 w-72 bg-slate-900/95 backdrop-blur-xl border-r border-accent-subtle z-50 animate-slide-in-left overflow-y-auto">
+      <div className="fixed left-0 top-0 bottom-0 w-72 bg-slate-900/95 backdrop-blur-xl border-r border-accent-subtle z-50 overflow-y-auto" style={{ pointerEvents: 'auto' }}>
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-accent-subtle bg-header">
           <h3 className="text-sm font-semibold text-text-accent">Settings</h3>
