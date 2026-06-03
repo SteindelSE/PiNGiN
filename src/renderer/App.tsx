@@ -38,6 +38,8 @@ declare global {
       getSettings: () => Promise<PinginSettings>;
       setSettings: (settings: PinginSettings) => Promise<any>;
       hideWindow: () => Promise<void>;
+      minimizeWindow: () => Promise<void>;
+      maximizeWindow: () => Promise<void>;
       closeWindow: () => Promise<void>;
       captureContext: () => Promise<any>;
       onMarkRegionStart: (cb: () => void) => void;
@@ -45,6 +47,7 @@ declare global {
       resumeSession: (sessionId: string) => Promise<any>;
       deleteSession: (sessionId: string) => Promise<any>;
       getAllSessions: () => Promise<any[]>;
+      saveSession: () => Promise<any>;
     };
   }
 }

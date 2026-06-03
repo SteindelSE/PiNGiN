@@ -33,9 +33,13 @@ export const IPC_CHANNELS = {
   SESSION_RESUME: 'pingin:session-resume',
   SESSION_DELETE: 'pingin:session-delete',
   SESSIONS_LIST: 'pingin:sessions-list',
+  SESSION_SAVE: 'pingin:session-save',
   // Window
   WINDOW_SHOW: 'pingin:window-show',
   WINDOW_HIDE: 'pingin:window-hide',
+  WINDOW_MINIMIZE: 'pingin:window-minimize',
+  WINDOW_MAXIMIZE: 'pingin:window-maximize',
+  WINDOW_IS_MAXIMIZED: 'pingin:window-is-maximized',
   WINDOW_CLOSE: 'pingin:window-close',
   // Settings
   SETTINGS_GET: 'pingin:settings-get',

@@ -335,6 +335,28 @@ export class SessionManager {
     return this.sessionInfos.get(this.currentSessionId) || null;
   }
 
+  async saveCurrentSession(): Promise<void> {
+    // Save the inline session to history so it can be recalled later
+    const info = this.sessionInfos.get('inline');
+    if (!info) return;
+
+    // Create a named history session from the inline session
+    const sessionId = `hist-${Date.now()}`;
+    const stats = await this.getStats();
+
+    this.sessionInfos.set(sessionId, {
+      id: sessionId,
+      name: info.name || 'Saved Session',
+      type: 'cursor',
+      model: stats?.model || info.model,
+      thinkingLevel: info.thinkingLevel,
+      isStreaming: false,
+      messageCount: info.messageCount,
+      contextUsage: info.contextUsage,
+      lastActivity: Date.now(),
+    });
+  }
+
   async spawnBackgroundSession(
     settings: PinginSettings,
     context?: CapturedContext

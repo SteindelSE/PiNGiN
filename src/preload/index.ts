@@ -42,6 +42,7 @@ contextBridge.exposeInMainWorld('pingin', {
   resumeSession: (sessionId: string) => ipcRenderer.invoke(IPC_CHANNELS.SESSION_RESUME, sessionId),
   deleteSession: (sessionId: string) => ipcRenderer.invoke(IPC_CHANNELS.SESSION_DELETE, sessionId),
   getAllSessions: () => ipcRenderer.invoke(IPC_CHANNELS.SESSIONS_LIST),
+  saveSession: () => ipcRenderer.invoke(IPC_CHANNELS.SESSION_SAVE),
 
   // Settings
   getSettings: () => ipcRenderer.invoke(IPC_CHANNELS.SETTINGS_GET),
@@ -49,7 +50,10 @@ contextBridge.exposeInMainWorld('pingin', {
 
   // Window
   hideWindow: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_HIDE),
+  minimizeWindow: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_MINIMIZE),
+  maximizeWindow: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_MAXIMIZE),
   closeWindow: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_CLOSE),
+  isMaximized: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_IS_MAXIMIZED),
 
   // Context capture
   captureContext: () => ipcRenderer.invoke(IPC_CHANNELS.CAPTURE_CONTEXT),

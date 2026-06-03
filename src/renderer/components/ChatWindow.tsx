@@ -34,11 +34,6 @@ const ChatWindow: React.FC = () => {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Focus input on mount
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
   const handleSend = useCallback(async () => {
     const text = inputText.trim();
     if (!text) return;
@@ -99,7 +94,8 @@ const ChatWindow: React.FC = () => {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1 no-drag">
+        <div className="flex items-center gap-0.5 no-drag">
+          {/* Abort (only during streaming) */}
           {isStreaming && (
             <button
               onClick={handleAbort}
@@ -111,6 +107,7 @@ const ChatWindow: React.FC = () => {
               </svg>
             </button>
           )}
+          {/* Clear chat */}
           <button
             onClick={handleClear}
             className="p-1 rounded hover:bg-slate-700/50 transition-colors text-slate-400 hover:text-slate-200"
@@ -120,13 +117,36 @@ const ChatWindow: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </button>
+          {/* Window controls — conventional rightmost placement */}
           <button
-            onClick={() => setShowHamburgerMenu(true)}
+            onClick={() => window.pingin.minimizeWindow()}
             className="p-1 rounded hover:bg-slate-700/50 transition-colors text-slate-400 hover:text-slate-200"
-            title="Menu"
+            title="Minimize"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+            </svg>
+          </button>
+          <button
+            onClick={() => window.pingin.maximizeWindow()}
+            className="p-1 rounded hover:bg-slate-700/50 transition-colors text-slate-400 hover:text-slate-200"
+            title="Maximize"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4h16v16H4z" />
+            </svg>
+          </button>
+          <button
+            onClick={async () => {
+              // Save session to history before closing
+              await window.pingin.saveSession();
+              await window.pingin.closeWindow();
+            }}
+            className="p-1 rounded hover:bg-red-500/30 transition-colors text-slate-400 hover:text-red-400"
+            title="Close"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>

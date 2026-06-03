@@ -95,7 +95,12 @@ function buildContextPrompt(context: any): string {
     parts.push(`**Working Directory:** ${context.workingDirectory}`);
   }
 
-  return parts.join('\n\n');
+  const contextBlock = parts.join('\n\n');
+
+  return [
+    'Here is my current context. Please acknowledge it briefly and wait for my next prompt:',
+    contextBlock,
+  ].join('\n\n');
 }
 
 app.whenReady().then(() => {
@@ -245,7 +250,31 @@ function registerIpcHandlers(): void {
     return sessionManager.getAllSessions();
   });
 
+  ipcMain.handle(IPC_CHANNELS.SESSION_SAVE, async () => {
+    return sessionManager.saveCurrentSession();
+  });
+
   // Window
+  ipcMain.handle(IPC_CHANNELS.WINDOW_MINIMIZE, () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.minimize();
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.WINDOW_MAXIMIZE, () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize();
+      } else {
+        mainWindow.maximize();
+      }
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.WINDOW_IS_MAXIMIZED, () => {
+    return mainWindow?.isMaximized() || false;
+  });
+
   ipcMain.handle(IPC_CHANNELS.WINDOW_HIDE, () => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.hide();
