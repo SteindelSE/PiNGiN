@@ -91,22 +91,19 @@ const ChatWindow: React.FC = () => {
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span className="text-xs text-text-accent-dim">streaming</span>
+              <button
+                onClick={handleAbort}
+                className="p-0.5 rounded hover:bg-accent-subtle transition-colors text-accent hover:text-text-accent"
+                title="Abort"
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </span>
           )}
         </div>
         <div className="flex items-center gap-0.5 no-drag">
-          {/* Abort (only during streaming) */}
-          {isStreaming && (
-            <button
-              onClick={handleAbort}
-              className="p-1 rounded hover:bg-accent-subtle transition-colors text-accent hover:text-text-accent"
-              title="Abort"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          )}
           {/* Clear chat */}
           <button
             onClick={handleClear}
