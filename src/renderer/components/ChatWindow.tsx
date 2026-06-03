@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { usePinginStore } from '../store';
 import FoldableSection from './FoldableSection';
+import JsonRenderer from './JsonRenderer';
 
 const ChatWindow: React.FC = () => {
   const {
@@ -186,7 +187,9 @@ const ChatWindow: React.FC = () => {
                   : 'bg-slate-800/80 text-slate-200 rounded-bl-sm'
               } markdown-content`}
             >
-              <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+              <p className="whitespace-pre-wrap break-words">
+                <JsonRenderer text={msg.content} />
+              </p>
             </div>
           </div>
         ))}
